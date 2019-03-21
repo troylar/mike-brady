@@ -30,6 +30,11 @@ def remove_git_stuff(target_path):
 def render_templates(target_path, replace_values, file_types):
     basedir = os.path.abspath(target_path)
     for root, dirnames, files in os.walk(basedir):
+        for d in dirnames:
+            rendered_d = Environment().from_string(d).render(replace_values)
+            if not d == rendered_d:
+                print('Renaming {} to {}'.format(d, rendered_d))
+                os.rename(os.path.join(root, d), os.path.join(root, rendered_d))
         for f in files:
             skip = True
             full_path = os.path.join(root, f)
