@@ -18,7 +18,7 @@ URL = 'https://github.com/troylar/repo-blueprint'
 EMAIL = 'troylar@gmail.com'
 AUTHOR = 'Troy Larson'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '1.0'
+VERSION = '1.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -93,13 +93,11 @@ setup(
     version=about['__version__'],
     description=DESCRIPTION,
     long_description=long_description,
-    long_description_content_type='text/markdown',
     author=AUTHOR,
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=('tests',)),
-
     entry_points={
         'console_scripts': ['repo-bp=src.main:main'],
      },
