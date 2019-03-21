@@ -43,7 +43,7 @@ def render_templates(target_path, replace_values, file_types):
             template = env.get_template(f)
             rendered = template.render(replace_values)
             with open(full_path, "w") as fh:
-                print('Writing {}'.format(f))
+                print('Writing {}'.format(full_path))
                 fh.write(rendered)
 
 
