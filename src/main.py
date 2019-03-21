@@ -1,6 +1,7 @@
 import click
 from git import Repo
 import os
+import sys
 import glob
 import shutil
 import json
@@ -10,8 +11,11 @@ from jinja2 import Environment, FileSystemLoader
 repo = None
 
 
-def clone_repo(source_repo, target_path):
+def clone_repo(source_repo, target_path, force):
     if (os.path.exists(target_path)):
+        if not force:
+            print('ERROR: Target folder exists . . . use --force-delete if you want to delete.')
+            sys.exit()
         shutil.rmtree(target_path)
     Repo.clone_from(source_repo, target_path)
 
@@ -57,8 +61,9 @@ def render_templates(target_path, replace_values, file_types):
 @click.argument('target_path', required=True)
 @click.argument('replace_values', required=True)
 @click.argument('file_types', required=True)
-def main(source_repo, target_path, replace_values, file_types):
-    clone_repo(source_repo, target_path)
+@click.option('--force-delete/--do_not_force_delete', default=False)
+def main(source_repo, target_path, replace_values, file_types, force_delete):
+    clone_repo(source_repo, target_path, force_delete)
     remove_git_stuff(target_path)
     render_templates(target_path, json.loads(replace_values), file_types.split(','))
 
